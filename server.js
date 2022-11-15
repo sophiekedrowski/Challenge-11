@@ -43,6 +43,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
+// app.delete ('/api/notes/:id', (req, res) => {
+// console.log(req.params)
+// for (let i = 0; i < noteData.length; i++) {
+//   const element = noteData[i];
+  
+// }
+// })
+
 
 
 // app.listen(PORT, () =>
