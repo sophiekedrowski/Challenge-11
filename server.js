@@ -29,27 +29,39 @@ app.get('/api/notes', (req, res) => res.json(noteData));
 
 
 app.post('/api/notes', (req, res) => {
-req.body.id = uuid()
+  req.body.id = uuid()
 
 
-noteData.push(req.body)
-fs.writeFile('./Develop/db/db.json', JSON.stringify(noteData), (err) => {
-if (err) {console.error(err);}})
+  noteData.push(req.body)
+  fs.writeFile('./Develop/db/db.json', JSON.stringify(noteData), (err) => {
+    if (err) { console.error(err); }
+  })
   // console.log(req.body)
-res.json("request recieved")
+  res.json("request recieved")
 });
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
-// app.delete ('/api/notes/:id', (req, res) => {
-// console.log(req.params)
-// for (let i = 0; i < noteData.length; i++) {
-//   const element = noteData[i];
-  
-// }
-// })
+app.delete('/api/notes/:id', (req, res) => {
+  let newNoteData = [];
+  for (let i = 0; i < noteData.length; i++) {
+    const note = noteData[i];
+    if (note.id != req.params.id) {
+      newNoteData.push(note)
+      //detete
+    }
+  }
+  // console.log(noteData)
+  fs.writeFile('./Develop/db/db.json', JSON.stringify(newNoteData), (err) => {
+    if (err) { console.error(err); }
+    else{
+    console.log("note deleted")
+    }
+  })
+  res.json("note deleted")
+})
 
 
 
